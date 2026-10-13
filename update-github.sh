@@ -1,4 +1,4 @@
 git add -A
 git status
-git commit -m "Cleanup before merge"
+git commit -m "Latest Commit"
 git push

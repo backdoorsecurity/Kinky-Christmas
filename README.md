@@ -10,7 +10,7 @@ This is my personal repo i use for fresh installs, open for anyone to use.
   
 ```bash
 git clone https://github.com/backdoorsecurity/Swaytastic.git
-cd Swaytastic/host
+cd Swaytastic
 ./install.sh
 ```
   
