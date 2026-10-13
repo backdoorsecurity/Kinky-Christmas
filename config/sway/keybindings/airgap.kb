@@ -1,0 +1,111 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# ====================== HOST (10.10.10.0) RULES ======================
+HOST_RULES='
+########################### OPEN AND FLUSH ##############################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+
+############################### INPUT ###################################
+iptables -A INPUT -p tcp -i br0 -s 10.10.10.0/28 -j ACCEPT
+iptables -A INPUT -p udp -i br0 -s 10.10.10.0/28 -j ACCEPT
+iptables -A INPUT -p icmp -i br0 -s 10.10.10.0/28 -j ACCEPT
+
+############################### OUTPUT ##################################
+iptables -A OUTPUT -p tcp -o br0 -d 10.10.10.0/28 -j ACCEPT
+iptables -A OUTPUT -p udp -o br0 -d 10.10.10.0/28 -j ACCEPT
+iptables -A OUTPUT -p icmp -o br0 -d 10.10.10.0/28 -j ACCEPT
+
+############################# LOOPBACK ##################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+########################### DEFAULT POLICY ##############################
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+'
+
+# ====================== NET-VM (10.10.10.1) RULES ======================
+NETVM_RULES='
+########################### OPEN AND FLUSH ##############################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+
+############################### INPUT ###################################
+iptables -A INPUT -p tcp -i eth0 -s 10.10.10.0 -d 10.10.10.1 -j ACCEPT
+iptables -A INPUT -p udp -i eth0 -s 10.10.10.0 -d 10.10.10.1 -j ACCEPT
+iptables -A INPUT -p icmp -i eth0 -s 10.10.10.0 -d 10.10.10.1 -j ACCEPT
+
+############################### OUTPUT ##################################
+iptables -A OUTPUT -p tcp -o eth0 -s 10.10.10.1 -d 10.10.10.0 -j ACCEPT
+iptables -A OUTPUT -p udp -o eth0 -s 10.10.10.1 -d 10.10.10.0 -j ACCEPT
+iptables -A OUTPUT -p icmp -o eth0 -s 10.10.10.1 -d 10.10.10.0 -j ACCEPT
+
+############################# LOOPBACK ##################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+########################### DEFAULT POLICY ##############################
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+'
+
+# ====================== BROWSER (10.10.10.2) RULES ======================
+BROWSER_RULES='
+############################### OPEN AND FLUSH #############################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+#############################################################################
+
+##################################### INPUT #################################
+iptables -A INPUT -p tcp -i eth0 -s 10.10.10.0 -d 10.10.10.2 -j ACCEPT
+iptables -A INPUT -p udp -i eth0 -s 10.10.10.0 -d 10.10.10.2 -j ACCEPT
+iptables -A INPUT -p icmp -i eth0 -s 10.10.10.0 -d 10.10.10.2 -j ACCEPT
+#############################################################################
+
+#################################### OUTPUT #################################
+iptables -A OUTPUT -p tcp -o eth0 -s 10.10.10.2 -d 10.10.10.0 -j ACCEPT
+iptables -A OUTPUT -p udp -o eth0 -s 10.10.10.2 -d 10.10.10.0 -j ACCEPT
+iptables -A OUTPUT -p icmp -o eth0 -s 10.10.10.2 -d 10.10.10.0 -j ACCEPT
+#############################################################################
+
+################################## LOOPBACK #################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+#############################################################################
+
+################################ DEFAULT POLICY #############################
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+#############################################################################
+'
+echo "Applying airgap rules..."
+
+# Apply to Host
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.0 "$HOST_RULES" 2>/dev/null && \
+    echo "host-os (10.10.10.0) rules applied" || echo "host-os failed"
+
+# Apply to Net-VM
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.1 "$NETVM_RULES" 2>/dev/null && \
+    echo "net-vm (10.10.10.1) rules applied" || echo "net-vm failed"
+
+# Apply to Browser
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.2 "$BROWSER_RULES" 2>/dev/null && \
+    echo "browser-vm (10.10.10.2) rules applied" || echo "browser failed"

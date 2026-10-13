@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pkill waypipe
+sleep 0.1
+waypipe --vsock --threads 4 --socket 3:1234 --compress zstd=1 client &
+ssh browser@10.10.10.2 "waypipe --vsock --socket 2:1234 --compress zstd=1 server falkon --enable-features=UseOzonePlatform --ozone-platform=wayland --password-store=basic"

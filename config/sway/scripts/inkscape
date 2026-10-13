@@ -1,0 +1,13 @@
+#!/bin/bash
+
+TOOL="inkscape"
+USER="inkscape"
+
+# Kill any existing waypipe instance
+pkill -9 waypipe 2>/dev/null
+sleep 0.2
+
+# Start waypipe client on host
+waypipe --vsock --threads 2 --socket 3:7777 client &
+
+ssh $USER@10.10.10.2 waypipe --vsock --socket 2:7777 server $TOOL

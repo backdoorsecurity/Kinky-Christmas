@@ -1,0 +1,135 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# ====================== HOST (10.10.10.0) RULES ======================
+HOST_RULES='
+########################### OPEN AND FLUSH ##################################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+#############################################################################
+
+##################################### INPUT #################################
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p tcp -i br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+iptables -A INPUT -p udp -i br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+iptables -A INPUT -p icmp -i br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+#############################################################################
+
+#################################### OUTPUT #################################
+iptables -A OUTPUT -p tcp -o br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+iptables -A OUTPUT -p udp -o br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+iptables -A OUTPUT -p icmp -o br0 -s 10.10.10.0/28 -d 10.10.10.0/28 -j ACCEPT
+#############################################################################
+
+################################### LOOPBACK ################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+#############################################################################
+
+################################# DEFAULT POLICY ############################
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD DROP
+#############################################################################
+'
+
+# ====================== NET-VM (10.10.10.1) RULES ======================
+NETVM_RULES='
+########################## OPEN AND FLUSH ##################################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+############################################################################
+
+#################################### INPUT #################################
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp --dport 22 -s 10.10.10.0 -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 22 -s 192.168.0.0/24 -j ACCEPT
+iptables -A INPUT -i eth1 -p tcp --dport 22 -s 192.168.0.0/24 -j ACCEPT
+############################################################################
+
+################################### OUTPUT #################################
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -s 10.10.10.0 -j ACCEPT
+iptables -A OUTPUT -o wlan0 -p tcp --sport 22 -s 192.168.0.0/24 -j ACCEPT
+iptables -A OUTPUT -o eth1 -p tcp --sport 22 -s 192.168.0.0/24 -j ACCEPT
+iptables -A OUTPUT -o tun0 -p tcp --sport 22 -s 192.168.0.0/24 -j ACCEPT
+############################################################################
+
+############################### FORWARD RULES ##############################
+iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
+iptables -A FORWARD -i eth0 -o enp8s0 -j ACCEPT
+iptables -A FORWARD -i eth0 -o tun0 -j ACCEPT
+############################################################################
+
+##################################### NAT ##################################
+iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+############################################################################
+
+################################## LOOPBACK ################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+############################################################################
+
+################################ DEFAULT POLICY ############################
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD DROP
+############################################################################
+'
+
+# ====================== BROWSER (10.10.10.2) RULES ======================
+BROWSER_RULES='
+########################## OPEN AND FLUSH ##################################
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -t nat -F
+iptables -F
+iptables -X
+############################################################################
+
+#################################### INPUT #################################
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp --dport 22 -s 10.10.10.0 -j ACCEPT
+############################################################################
+
+################################### OUTPUT #################################
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -d 10.10.10.0 -j ACCEPT
+############################################################################
+
+################################## LOOPBACK ################################
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+############################################################################
+
+################################ DEFAULT POLICY ############################
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD DROP
+############################################################################
+'
+
+echo "Applying internet rules..."
+
+# Apply to Host
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.0 "$HOST_RULES" 2>/dev/null && \
+    echo "host (10.10.10.0) rules applied" || echo "host failed"
+
+# Apply to Net-VM
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.1 "$NETVM_RULES" 2>/dev/null && \
+    echo "net-vm (10.10.10.1) rules applied" || echo "net-vm failed"
+
+# Apply to Browser
+ssh -o ConnectTimeout=1 -o BatchMode=yes root@10.10.10.2 "$BROWSER_RULES" 2>/dev/null && \
+    echo "browser (10.10.10.2) rules applied" || echo "browser failed"

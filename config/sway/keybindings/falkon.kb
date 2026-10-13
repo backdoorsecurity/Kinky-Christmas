@@ -1,0 +1,29 @@
+#!/bin/bash
+
+BROWSER="falkon"
+USER="admin"
+
+# Kill any existing waypipe instance
+pkill -9 waypipe 2>/dev/null
+sleep 0.2
+
+# Start waypipe client on host
+waypipe --vsock --threads 2 --socket 3:1234 client &
+
+ssh $USER@10.10.10.2 \
+"firejail --profile=$HOME/.config/firejail/falkon/falkon.profile \
+    waypipe --vsock --socket 2:1234 server $BROWSER \
+    --password-store=basic \
+    --enable-features=UseOzonePlatform \
+    --disable-features=Vulkan\
+    --ozone-platform=wayland \
+    --render-node-override=/dev/dri/renderD128 \
+    --ignore-gpu-blocklist \
+    --use-gl=angle \
+    --enable-gpu-rasterization \
+    --num-raster-threads=2 \
+    --enable-features=VaapiVideoDecoder,WebGPU,CanvasOopRasterization \
+    --enable-zero-copy \
+     --enable-features=EnableDrDc \
+     --enable-features=VaapiVideoEncoder \
+"
