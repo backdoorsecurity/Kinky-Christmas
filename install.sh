@@ -57,4 +57,6 @@ sudo cp -a $SRC/local/qss/Swaytastic.qss /usr/share/qt6ct/qss/
 sudo cp -a $SRC/local/themes/Swaytastic /usr/share/themes/
 sudo cp -a $SRC/local/icons/Swaytastic /usr/share/icons/
 
-echo "GTK_THEME=Swaytastic" >> ~/.zprofile
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Swaytastic'
+gsettings set org.gnome.desktop.interface icon-theme 'Swaytastic'

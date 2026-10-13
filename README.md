@@ -1,8 +1,7 @@
 # Swaytastic  
   
   
-Very dark Sway theme kit for those with light-sensitive eyes.  
-Currently supports debian. will be adding support for more distros soon.  
+Very dark Debian/Sway theme kit for those with light-sensitive eyes.  
 This is my personal repo i use for fresh installs, open for anyone to use.  
   
   
