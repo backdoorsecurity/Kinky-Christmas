@@ -11,9 +11,9 @@
     <clipPath id="c">
         <rect height="152" width="192"/>
     </clipPath>
-    <path d="m 28 8 h 50 l 30.042969 29.917969 v 74.058593 c 0 4.433594 -3.609375 8.023438 -8.042969 8.023438 h -72 c -4.433594 0 -8 -3.566406 -8 -8 v -96 c 0 -4.433594 3.566406 -8 8 -8 z m 0 0" fill="#bbab0c"/>
-    <path d="m 78 8 v 22 c 0 4.433594 3.609375 7.921875 8.042969 7.921875 l 22 -0.003906 z m 0 0" fill="#bbab0c"/>
-    <g fill="#bbab0c">
+    <path d="m 28 8 h 50 l 30.042969 29.917969 v 74.058593 c 0 4.433594 -3.609375 8.023438 -8.042969 8.023438 h -72 c -4.433594 0 -8 -3.566406 -8 -8 v -96 c 0 -4.433594 3.566406 -8 8 -8 z m 0 0" fill="#130303" stroke="#400505" stroke-width="4" stroke-linejoin="round"/>
+    <path d="m 78 8 v 22 c 0 4.433594 3.609375 7.921875 8.042969 7.921875 l 22 -0.003906 z m 0 0" fill="#307005"/>
+    <g fill="#307005">
         <g clip-path="url(#c)" mask="url(#b)" transform="matrix(1 0 0 1 -8 -16)">
             <path d="m 42 36 h 2 v 30 h -2 z m 0 0"/>
             <path d="m 52 36 h 2 v 30 h -2 z m 0 0"/>
@@ -38,11 +38,11 @@
         <path d="m 34 54 h 2 v 38 h -2 z m 0 0"/>
         <path d="m 94 90 v 2 h -60 v -2 z m 0 0"/>
     </g>
-    <path d="m 38 68 h 6 v 20 h -6 z m 0 0" fill="#489419"/>
-    <path d="m 46 76 h 6 v 12 h -6 z m 0 0" fill="#5c0b70"/>
-    <path d="m 54 60 h 6 v 28 h -6 z m 0 0" fill="#bbab0c"/>
-    <path d="m 62 64 h 6 v 24 h -6 z m 0 0" fill="#ac0c1c"/>
-    <path d="m 70 74 h 6 v 14 h -6 z m 0 0" fill="#5c0b70"/>
-    <path d="m 78 80 h 6 v 8 h -6 z m 0 0" fill="#242770"/>
-    <path d="m 86 70 h 6 v 18 h -6 z m 0 0" fill="#bbab0c"/>
+    <path d="m 38 68 h 6 v 20 h -6 z m 0 0" fill="#307005"/>
+    <path d="m 46 76 h 6 v 12 h -6 z m 0 0" fill="#400505"/>
+    <path d="m 54 60 h 6 v 28 h -6 z m 0 0" fill="#307005"/>
+    <path d="m 62 64 h 6 v 24 h -6 z m 0 0" fill="#301010"/>
+    <path d="m 70 74 h 6 v 14 h -6 z m 0 0" fill="#400505"/>
+    <path d="m 78 80 h 6 v 8 h -6 z m 0 0" fill="#130303"/>
+    <path d="m 86 70 h 6 v 18 h -6 z m 0 0" fill="#307005"/>
 </svg>

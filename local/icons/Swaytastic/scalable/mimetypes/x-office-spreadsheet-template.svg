@@ -85,8 +85,8 @@
     </clipPath>
     <g clip-path="url(#a)">
         <g clip-path="url(#b)">
-            <path d="m 28 8 h 50 l 30.042969 29.917969 v 74.058593 c 0 4.433594 -3.609375 8.023438 -8.042969 8.023438 h -72 c -4.433594 0 -8 -3.566406 -8 -8 v -96 c 0 -4.433594 3.566406 -8 8 -8 z m 0 0" fill="#bbab0c"/>
-            <g clip-path="url(#e)" fill="#bbab0c" mask="url(#d)" transform="matrix(1 0 0 1 -8 -16)">
+            <path d="m 28 8 h 50 l 30.042969 29.917969 v 74.058593 c 0 4.433594 -3.609375 8.023438 -8.042969 8.023438 h -72 c -4.433594 0 -8 -3.566406 -8 -8 v -96 c 0 -4.433594 3.566406 -8 8 -8 z m 0 0" fill="#130303" stroke="#400505" stroke-width="4" stroke-linejoin="round"/>
+            <g clip-path="url(#e)" fill="#307005" mask="url(#d)" transform="matrix(1 0 0 1 -8 -16)">
                 <path d="m 42 36 h 2 v 30 h -2 z m 0 0"/>
                 <path d="m 52 36 h 2 v 30 h -2 z m 0 0"/>
                 <path d="m 68 36 h 2 v 30 h -2 z m 0 0"/>
@@ -116,53 +116,53 @@
     </g>
     <g clip-path="url(#h)">
         <g clip-path="url(#i)">
-            <path d="m 34 54 h 2 v 38 h -2 z m 0 0" fill="#bbab0c"/>
+            <path d="m 34 54 h 2 v 38 h -2 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#j)">
         <g clip-path="url(#k)">
-            <path d="m 94 90 v 2 h -60 v -2 z m 0 0" fill="#bbab0c"/>
+            <path d="m 94 90 v 2 h -60 v -2 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#l)">
         <g clip-path="url(#m)">
-            <path d="m 38 68 h 6 v 20 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 38 68 h 6 v 20 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#n)">
         <g clip-path="url(#o)">
-            <path d="m 46 76 h 6 v 12 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 46 76 h 6 v 12 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#p)">
         <g clip-path="url(#q)">
-            <path d="m 54 60 h 6 v 28 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 54 60 h 6 v 28 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#r)">
         <g clip-path="url(#s)">
-            <path d="m 62 64 h 6 v 24 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 62 64 h 6 v 24 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#t)">
         <g clip-path="url(#u)">
-            <path d="m 70 74 h 6 v 14 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 70 74 h 6 v 14 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#v)">
         <g clip-path="url(#w)">
-            <path d="m 78 80 h 6 v 8 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 78 80 h 6 v 8 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#x)">
         <g clip-path="url(#y)">
-            <path d="m 86 70 h 6 v 18 h -6 z m 0 0" fill="#bbab0c"/>
+            <path d="m 86 70 h 6 v 18 h -6 z m 0 0" fill="#307005"/>
         </g>
     </g>
     <g clip-path="url(#z)">
         <g clip-path="url(#A)">
-            <path d="m 64 8 l 48 112 v -112 z m 0 0" fill="#bbab0c" fill-opacity="0.454902"/>
+            <path d="m 64 8 l 48 112 v -112 z m 0 0" fill="#307005" fill-opacity="0.454902"/>
         </g>
     </g>
-    <path d="m 78 8 v 22 c 0 4.433594 3.609375 7.921875 8.042969 7.921875 l 22 -0.003906 z m 0 0" fill="#bbab0c"/>
+    <path d="m 78 8 v 22 c 0 4.433594 3.609375 7.921875 8.042969 7.921875 l 22 -0.003906 z m 0 0" fill="#307005"/>
 </svg>

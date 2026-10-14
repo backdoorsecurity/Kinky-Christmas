@@ -50,7 +50,7 @@ set $ws5 5
 	bindsym $mod+Shift+r reload
 	
 	bindsym $mod+x kill
-        bindsym $mod+q workspace $ws1, exec --no-startup-id brave-origin-nightly --silent-debugger-extension-api
+        bindsym $mod+q workspace $ws1, exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api
         bindsym $mod+shift+q exec --no-startup-id chromium
         bindsym $mod+w exec --no-startup-id foot
         bindsym $mod+e exec --no-startup-id foot
@@ -94,8 +94,7 @@ set $ws5 5
 # Panel EDID only advertises 2560x1600@60/165. Lower modes need --custom
 # (panel scaler); Plasma synthesizes these, Sway does not unless asked.
 	output eDP-1 {
-		mode --custom 1280x800@60Hz
-		scale 1
+	mode --custom 1280x800@60Hz scale 1
 	}
 # HiDPI desktop (native):  output eDP-1 resolution 2560x1600@60Hz scale 1.8
 # Other custom 16:10:      1600x1000@60Hz / 1920x1200@60Hz
@@ -159,6 +158,8 @@ seat * xcursor_theme Oxygen_Black/ 50
 #exec_always pgrep -x wlsunset || wlsunset -t 3200
 # NetworkManager tray icon (picked up by waybar tray module)
 exec_always pgrep -x nm-applet >/dev/null || nm-applet --indicator
+# pcmanfm-qt draws the desktop folders. Wallpaper is not set here.
+exec_always pgrep -x pcmanfm-qt >/dev/null || QT_QPA_PLATFORM=wayland QT_QPA_PLATFORMTHEME=qt6ct pcmanfm-qt --desktop --profile=sway
 font monospace 14
 #set $WLR_RENDERER gles2
 include /etc/sway/config-vars.d/*

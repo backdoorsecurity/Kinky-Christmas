@@ -1,6 +1,6 @@
 [Icon Theme]
 Name=Swaytastic
-Comment=Dirty Crayon (yellow text, mixed chrome)
+Comment=Dark red body, green text, burnt red borders
 Inherits=Adwaita,hicolor
 Directories=scalable/places,scalable/mimetypes,scalable/devices,scalable/status,symbolic/actions,symbolic/apps,symbolic/categories,symbolic/devices,symbolic/emotes,symbolic/mimetypes,symbolic/places,symbolic/status,symbolic/legacy,symbolic/ui
 

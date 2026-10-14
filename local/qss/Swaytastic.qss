@@ -1,42 +1,43 @@
 /* Local Swaytastic/qt6ct chrome: accent outline boxes, extra item padding. */
 
 QMenu {
-    background: #090909;
-    color: #bbab0c;
-    border: 2px solid #de2a6a;
+    background: #130303;
+    color: #307005;
+    border: 1px solid #400505;
     padding: 6px;
     margin: 0px;
 }
 
 QMenu::item {
     background: transparent;
-    color: #bbab0c;
+    color: #307005;
     padding: 6px 28px 6px 12px;
     margin: 1px 0px;
 }
 
 QMenu::item:selected {
-    background: #163ca3;
-    color: #bbab0c;
+    background: #400505;
+    color: #307005;
 }
 
 QMenu::item:disabled {
-    color: #489419;
+    color: #601510;
 }
 
 QMenu::separator {
     height: 2px;
-    background: #de2a6a;
+    background: #400505;
     margin: 6px 8px;
 }
 
 QMenu::right-arrow {
+    image: url(/usr/share/qt6ct/qss/right.png);
     width: 10px;
     height: 10px;
 }
 
 QFrame, QGroupBox, QTabWidget::pane {
-    border: 2px solid #de2a6a;
+    border: 1px solid #400505;
 }
 
 QGroupBox {
@@ -45,18 +46,24 @@ QGroupBox {
 }
 
 QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QComboBox, QAbstractSpinBox {
-    background: #090909;
-    color: #bbab0c;
-    border: 2px solid #de2a6a;
+    background: #030903;
+    color: #601510;
+    border: 1px solid #400505;
     padding: 4px 8px;
-    selection-background-color: #163ca3;
-    selection-color: #bbab0c;
+    selection-background-color: #400505;
+    selection-color: #307005;
 }
 
 QComboBox::drop-down {
-    border-left: 2px solid #de2a6a;
+    border-left: 1px solid #400505;
     width: 22px;
-    background: #de2a6a;
+    background: #400505;
+}
+
+QComboBox::down-arrow {
+    image: url(/usr/share/qt6ct/qss/down.png);
+    width: 10px;
+    height: 10px;
 }
 
 /* Desktop is a fullscreen layer-shell surface (exclusive zone -1), so a
@@ -85,9 +92,9 @@ QMainWindow QTreeView, QDialog QTreeView,
 QMainWindow QListView, QDialog QListView,
 QMainWindow QTableView, QDialog QTableView,
 QMainWindow QColumnView, QDialog QColumnView {
-    background: #090909;
-    color: #bbab0c;
-    border: 2px solid #de2a6a;
+    background: #130303;
+    color: #307005;
+    border: 1px solid #400505;
     padding: 4px;
     outline: 0;
 }
@@ -102,19 +109,19 @@ QMainWindow QTableView::item, QDialog QTableView::item {
 QMainWindow QTreeView::item:selected, QDialog QTreeView::item:selected,
 QMainWindow QListView::item:selected, QDialog QListView::item:selected,
 QMainWindow QTableView::item:selected, QDialog QTableView::item:selected {
-    background: #163ca3;
-    color: #bbab0c;
+    background: #400505;
+    color: #307005;
 }
 
 QHeaderView::section {
-    background: #090909;
-    color: #bbab0c;
-    border: 1px solid #de2a6a;
+    background: #130303;
+    color: #307005;
+    border: 1px solid #400505;
     padding: 6px 10px;
 }
 
 QSplitter::handle {
-    background: #de2a6a;
+    background: #400505;
 }
 
 QSplitter::handle:horizontal {
@@ -126,21 +133,21 @@ QSplitter::handle:vertical {
 }
 
 QScrollBar:vertical {
-    background: #090909;
+    background: #130303;
     width: 12px;
-    border: 2px solid #de2a6a;
+    border: 1px solid #400505;
     margin: 0;
 }
 
 QScrollBar:horizontal {
-    background: #090909;
+    background: #130303;
     height: 12px;
-    border: 2px solid #de2a6a;
+    border: 1px solid #400505;
     margin: 0;
 }
 
 QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-    background: #de2a6a;
+    background: #400505;
     min-height: 24px;
     min-width: 24px;
 }
@@ -151,88 +158,100 @@ QScrollBar::add-line, QScrollBar::sub-line {
 }
 
 QPushButton {
-    background: #090909;
-    color: #bbab0c;
-    border: 2px solid #de2a6a;
+    background: #130303;
+    color: #307005;
+    border: 1px solid #400505;
     padding: 5px 14px;
 }
 
 QPushButton:hover, QPushButton:focus {
-    background: #000010;
+    background: #030903;
 }
 
 QToolTip {
-    background: #090909;
-    color: #bbab0c;
-    border: 2px solid #de2a6a;
+    background: #130303;
+    color: #307005;
+    border: 1px solid #400505;
     padding: 4px 8px;
 }
 
 QStatusBar {
-    border-top: 2px solid #de2a6a;
+    border-top: 1px solid #400505;
 }
 
 /* Fusion derives checkbox/radio outlines from Window.darker(). Window is
    near-black, so the indicators vanish without an explicit border. */
 QCheckBox, QRadioButton {
-    color: #bbab0c;
+    color: #307005;
     spacing: 8px;
 }
 
 QCheckBox::indicator, QGroupBox::indicator {
     width: 14px;
     height: 14px;
-    border: 2px solid #de2a6a;
-    background: #090909;
+    border: 1px solid #400505;
+    background: #130303;
 }
 
 QCheckBox::indicator:checked, QGroupBox::indicator:checked {
-    background: #489419;
+    background: #307005;
 }
 
 QCheckBox::indicator:disabled, QGroupBox::indicator:disabled {
-    border-color: #6f1535;
-    background: #100909;
+    border-color: #400505;
+    background: #130303;
 }
 
 QCheckBox::indicator:checked:disabled, QGroupBox::indicator:checked:disabled {
-    background: #489419;
+    background: #307005;
 }
 
 QRadioButton::indicator {
     width: 14px;
     height: 14px;
-    border: 2px solid #de2a6a;
+    border: 1px solid #400505;
     border-radius: 8px;
-    background: #090909;
+    background: #130303;
 }
 
 QRadioButton::indicator:checked {
-    background: #489419;
+    background: #307005;
 }
 
 QRadioButton::indicator:disabled {
-    border-color: #6f1535;
-    background: #100909;
+    border-color: #400505;
+    background: #130303;
 }
 
 QRadioButton::indicator:checked:disabled {
-    background: #489419;
+    background: #307005;
 }
 
 QMenu::indicator {
     width: 12px;
     height: 12px;
-    border: 2px solid #de2a6a;
-    background: #090909;
+    border: 1px solid #400505;
+    background: #130303;
 }
 
 QMenu::indicator:checked {
-    background: #489419;
+    background: #307005;
 }
 
 QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {
     width: 16px;
-    background: #de2a6a;
+    background: #400505;
     border: none;
+}
+
+QAbstractSpinBox::up-arrow {
+    image: url(/usr/share/qt6ct/qss/up.png);
+    width: 8px;
+    height: 8px;
+}
+
+QAbstractSpinBox::down-arrow {
+    image: url(/usr/share/qt6ct/qss/down.png);
+    width: 8px;
+    height: 8px;
 }
