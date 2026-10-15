@@ -38,11 +38,11 @@ cd Kinky-Chistmas
 `these can be changed in ~/.config/sway/config and ~/.config/sway/keybindings`  
   
   
-[Desktop]  
+[Desktop]
   
   
-(images/desktop.png)   
+!(images/desktop.png)   
 [Browser]  
   
   
-(images/browser.png)   
+!(images/browser.png)   
