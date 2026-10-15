@@ -38,5 +38,9 @@ cd Kinky-Chistmas
 `these can be changed in ~/.config/sway/config and ~/.config/sway/keybindings`  
   
   
+`[Desktop view]`
 ![Desktop](images/desktop.png)   
+  
+  
+`[Brave Browser]`
 ![Browser](images/browser.png)   
