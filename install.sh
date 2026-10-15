@@ -36,6 +36,26 @@ PACKAGES=(
   usbutils
   locate
   build-essential
+  network-manager
+  network-manager-gnome
+  pipewire
+  pipewire-pulse
+  wireplumber
+  xdg-utils
+  gnome-keyring
+  libnotify-bin
+  virt-manager
+  qemu-system-x86
+  dnsmasq
+  swayimg
+  celluloid
+  firejail
+#  steam-installer
+  dosfstools
+  adb
+  smartmontools
+  intel-media-va-driver
+  mesa-vulkan-drivers
 )
 
 echo "installing packages"
@@ -48,6 +68,11 @@ if command -v brave-origin-nightly >/dev/null 2>&1; then
 else
   curl -fsS https://dl.brave.com/install.sh | FLAVOR=origin CHANNEL=nightly sh
 fi
+
+# installing ollama for speech to text.
+#curl -fsSL https://ollama.com/install.sh | sh
+#ollama pull frozenlab/qwen3-asr:1.7b
+#ollama pull frozenlab/qwen3-asr:0.6b
 
 cp $SRC/zshrc $HOME/.zshrc
 cp $SRC/zprofile $HOME/.zprofile

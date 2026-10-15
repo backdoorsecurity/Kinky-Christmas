@@ -21,19 +21,19 @@ window#waybar {
 }
 
 #workspaces button {
-    background: #030903;
+    background: #030901;
     color: #601510;
     border: 1px solid #201a00;
-    border-radius: 4;
-    padding: 4px 4px;
+    border-radius: 4px;
+    padding: 4px 6px;
     margin: 4px 2px;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-    background: #130303;
-    color: #307005;
-    border: 2px solid #400505;
+    background: #000000;
+    color: #309005;
+    border: 3px double #202500;
 }
 
 #workspaces button.urgent {
@@ -43,18 +43,19 @@ window#waybar {
 }
 
 #custom-sysstats {
-    background: #130303;
+    background: #100303;
     color: #307005;
     border: 1px solid #201a00;
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
     margin-right: 2px;
+    padding: 0 4px;
 }
 
 /* draining = yellow; charging / full / on AC = green; low/critical = red */
 #battery {
-    background: #130303;
+    background: #100303;
     color: #307005;
     border: 1px solid #201a00;
     border-radius: 2px;
@@ -62,6 +63,7 @@ window#waybar {
     margin-bottom: 4px;
     margin-left: 2px;
     margin-right: 4px;
+    padding: 0 4px;
 }
 
 #battery.charging,
@@ -76,16 +78,17 @@ window#waybar {
 }
 
 #clock { 
-    background: #130303;
+    background: #100303;
     color: #307005;
     border: 1px solid #201a00;
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
+    padding: 0 4px;
 }
 
 #tray {
-    background: #130303;
+    background: #100303;
     color: #307005;
     border: 1px solid #201a00;
     border-radius: 4px;
@@ -93,6 +96,7 @@ window#waybar {
     margin-bottom: 4px;
     margin-right: 2px;
     margin-left: 2px;
+    padding: 0 4px;
 }
 
 #tray > .passive {

@@ -51,7 +51,7 @@ set $ws5 5
 	
 	bindsym $mod+x kill
         bindsym $mod+q workspace $ws1, exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api
-        bindsym $mod+shift+q exec --no-startup-id chromium
+        bindsym $mod+shift+q exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api --remote-debugging-port=9222
         bindsym $mod+w exec --no-startup-id foot
         bindsym $mod+e exec --no-startup-id foot
         bindsym $mod+r exec --no-startup-id foot
@@ -153,7 +153,7 @@ default_border pixel 0
 #title_align center
 
 #set cursor style
-seat * xcursor_theme Oxygen_Black/ 50
+seat * xcursor_theme oxy-red-argentina 50
 #exec_always brightnessctl set 70%
 #exec_always pgrep -x wlsunset || wlsunset -t 3200
 # NetworkManager tray icon (picked up by waybar tray module)
