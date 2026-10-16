@@ -32,8 +32,8 @@ window#waybar {
 #workspaces button.focused,
 #workspaces button.active {
     background: #000000;
-    color: #309005;
-    border: 3px double #202500;
+    color: #399005;
+    box-shadow: 0px 0px 0px 1px #470005;
 }
 
 #workspaces button.urgent {

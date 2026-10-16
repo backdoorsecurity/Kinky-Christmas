@@ -6,7 +6,9 @@ STATE_DIR="${XDG_RUNTIME_DIR:-/tmp}/dictate"
 PIDFILE="$STATE_DIR/ffmpeg.pid"
 WAV="$STATE_DIR/take.wav"
 LOCK="$STATE_DIR/busy.lock"
-TRANSCRIBE="${TRANSCRIBE:-$HOME/projects/transcript/transcribe.py}"
+TRANSCRIBE="${TRANSCRIBE:-$HOME/.config/sway/scripts/transcribe.py}"
+SYMBOLS="${DICTATE_SYMBOLS:-$HOME/.config/sway/scripts/dictate-symbols}"
+SPOKEN="${SPOKEN_SYMBOLS:-$HOME/.config/sway/scripts/spoken-symbols.py}"
 MODEL="${DICTATE_MODEL:-frozenlab/qwen3-asr:latest}"
 
 notify() {
@@ -90,6 +92,16 @@ stop_and_type() {
     if [[ -z $text ]]; then
         notify "Dictation" "Empty transcript"
         return 0
+    fi
+
+    # Full symbol names only. Spaces beside an inserted symbol are removed.
+    if [[ -f $SYMBOLS && -f $SPOKEN ]]; then
+        local mapped
+        if mapped=$(printf '%s' "$text" | python3 "$SPOKEN" "$SYMBOLS"); then
+            text=$mapped
+        else
+            notify "Dictation" "Symbol map failed; typed the words"
+        fi
     fi
 
     # Brief pause so a notification daemon is less likely to steal focus.
