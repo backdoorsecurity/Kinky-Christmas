@@ -1,5 +1,5 @@
 #!/bin/bash
-SRC="$HOME/Swaytastic"
+SRC="$HOME/Kinky-Christmas"
 
 PACKAGES=(
   sway

@@ -57,7 +57,7 @@ set $ws5 5
         bindsym $mod+r exec --no-startup-id foot
         bindsym $mod+t workspace $ws5, exec --no-startup-id virt-manager
         bindsym $mod+Print exec $HOME/.config/sway/keybindings/screenrecord.kb
-        bindsym $mod+m exec --no-startup-id $HOME/.config/sway/scripts/dictate-toggle
+        bindsym $mod+space exec --no-startup-id $HOME/.config/sway/speech/dictate-toggle
 	bindsym $mod+i fullscreen
 	# Display presets: low-res scale1 (game/UI) vs native HiDPI
 	bindsym $mod+minus output eDP-1 mode --custom 1280x800@60Hz scale 1
