@@ -74,6 +74,7 @@ fi
 #ollama pull frozenlab/qwen3-asr:1.7b
 #ollama pull frozenlab/qwen3-asr:0.6b
 
+mkdir -p $HOME/.config
 cp $SRC/zshrc $HOME/.zshrc
 cp $SRC/zprofile $HOME/.zprofile
 cp -a $SRC/config/* $HOME/.config/
