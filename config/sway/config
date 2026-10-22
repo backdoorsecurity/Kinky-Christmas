@@ -50,7 +50,7 @@ set $ws5 5
 	bindsym $mod+Shift+r reload
 	
 	bindsym $mod+x kill
-        bindsym $mod+q workspace $ws1, exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api
+        bindsym $mod+q workspace $ws1, exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api --proxy-server=http://127.0.0.1:8877 '--proxy-bypass-list=<-loopback>' --disable-quic
         bindsym $mod+shift+q exec --no-startup-id QT_QPA_PLATFORMTHEME=qt6ct brave-origin-nightly --qt-version=6 --silent-debugger-extension-api --remote-debugging-port=9222
         bindsym $mod+w exec --no-startup-id foot
         bindsym $mod+e exec --no-startup-id foot

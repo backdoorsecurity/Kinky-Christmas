@@ -1,0 +1,120 @@
+/* Aligned with Swaygentic interface defaults (panel.css / colors.js):
+   --bg #0d0909, --text #c0a020. Workspace label colors kept from prior bar. */
+
+* {
+    font-family: monospace;
+    /* swaybar used global `font monospace 14` (Pango); GTK px needs larger to match */
+    font-size: 20px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: #000000;
+    color: #c0c0c0;
+    border: 1px solid #1f1030;
+    border-radius: 2px;
+}
+
+#workspaces {
+    margin-left: 2px;
+    padding: 0px 0px;
+}
+
+#workspaces button {
+    background: #000000;
+    color: #c0c0c0;
+    border: 1px solid #1f1030;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin: 4px 2px;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+    background: #000000;
+    color: #002080;
+    box-shadow: 0px 0px 0px 1px #470005;
+}
+
+#workspaces button.urgent {
+    background: #000000;
+    color: #2032ff;
+    border-color: #1f1030;
+}
+
+#custom-sysstats {
+    background: #000000;
+    color: #c0c0c0;
+    border: 1px solid #1f1030;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 2px;
+    padding: 0 4px;
+}
+
+/* draining = yellow; charging / full / on AC = green; low/critical = red */
+#battery {
+    background: #000000;
+    color: #c0c0c0;
+    border: 1px solid #1f1030;
+    border-radius: 2px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 2px;
+    margin-right: 4px;
+    padding: 0 4px;
+}
+
+#battery.charging,
+#battery.plugged,
+#battery.full {
+    color: #307005;
+}
+
+#battery.warning,
+#battery.critical {
+    color: #601510;
+}
+
+#clock { 
+    background: #000000;
+    color: #c0c0c0;
+    border: 1px solid #1f1030;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 0 4px;
+}
+
+#tray {
+    background: #000000;
+    color: #1f1030;
+    border: 1px solid #1f1030;
+    border-radius: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 2px;
+    margin-left: 2px;
+    padding: 0 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#privacy {
+    padding: 0 8px;
+}
+
+#privacy-item {
+    padding: 0 2px;
+}
+
+#privacy-item.audio-in {
+    color: #601510;
+}
