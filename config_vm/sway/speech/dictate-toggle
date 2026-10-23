@@ -1,0 +1,140 @@
+#!/bin/bash
+# Toggle mic dictation: record → Ollama ASR → type into focused window.
+set -u
+
+STATE_DIR="${XDG_RUNTIME_DIR:-/tmp}/dictate"
+PIDFILE="$STATE_DIR/ffmpeg.pid"
+WAV="$STATE_DIR/take.wav"
+LOCK="$STATE_DIR/busy.lock"
+TRANSCRIBE="${TRANSCRIBE:-$HOME/.config/sway/speech/transcribe.py}"
+SYMBOLS="${DICTATE_SYMBOLS:-$HOME/.config/sway/speech/dictate-symbols}"
+NUMBERS="${DICTATE_NUMBERS:-$HOME/.config/sway/speech/dictate-numbers}"
+SPOKEN="${SPOKEN_SYMBOLS:-$HOME/.config/sway/speech/spoken-symbols.py}"
+MODEL="${DICTATE_MODEL:-frozenlab/qwen3-asr:latest}"
+
+notify() {
+    notify-send --expire-time=2000 --app-name=Dictation "$@" 2>/dev/null || true
+}
+
+is_recording() {
+    [[ -f $PIDFILE ]] || return 1
+    local pid
+    pid=$(<"$PIDFILE")
+    [[ -n $pid ]] && kill -0 "$pid" 2>/dev/null
+}
+
+start_recording() {
+    mkdir -p "$STATE_DIR"
+    rm -f "$WAV"
+    # Pulse default mic → 16 kHz mono WAV (what qwen3-asr expects).
+    # disown so ffmpeg survives when this short-lived toggle script exits.
+    ffmpeg -y -f pulse -i default -ac 1 -ar 16000 -loglevel error "$WAV" \
+        </dev/null >/dev/null 2>&1 &
+    local pid=$!
+    echo "$pid" >"$PIDFILE"
+    disown "$pid" 2>/dev/null || true
+    sleep 0.15
+    if ! kill -0 "$pid" 2>/dev/null; then
+        notify "Dictation" "Failed to start ffmpeg"
+        rm -f "$PIDFILE"
+        return 1
+    fi
+    notify "Dictation" "Recording… (Alt+M to stop)"
+}
+
+wait_pid_gone() {
+    local pid=$1
+    local i=0
+    while kill -0 "$pid" 2>/dev/null; do
+        sleep 0.05
+        i=$((i + 1))
+        if (( i > 100 )); then
+            kill -KILL "$pid" 2>/dev/null || true
+            sleep 0.1
+            break
+        fi
+    done
+}
+
+stop_and_type() {
+    local pid text errfile
+
+    if [[ -e $LOCK ]]; then
+        notify "Dictation" "Already transcribing…"
+        return 0
+    fi
+    touch "$LOCK"
+    trap 'rm -f "$LOCK"' EXIT
+
+    pid=$(<"$PIDFILE")
+    # SIGINT lets ffmpeg finalize the WAV cleanly.
+    # This script is a new process each keypress, so we cannot wait(2) —
+    # poll until the recorder exits instead.
+    kill -INT "$pid" 2>/dev/null || true
+    wait_pid_gone "$pid"
+    rm -f "$PIDFILE"
+
+    if [[ ! -s $WAV ]]; then
+        notify "Dictation" "No audio captured"
+        rm -f "$WAV"
+        return 1
+    fi
+
+    notify "Dictation" "Transcribing…"
+    errfile="$STATE_DIR/transcribe.err"
+    if ! text=$(python3 "$TRANSCRIBE" --model "$MODEL" "$WAV" 2>"$errfile"); then
+        notify "Dictation" "Transcription failed (is Ollama running?)"
+        rm -f "$WAV" "$errfile"
+        return 1
+    fi
+    rm -f "$WAV" "$errfile"
+
+    text=$(printf '%s' "$text" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+    if [[ -z $text ]]; then
+        notify "Dictation" "Empty transcript"
+        return 0
+    fi
+
+    # Full symbol names only. Spaces beside an inserted symbol are removed.
+    if [[ -f $SYMBOLS && -f $SPOKEN ]]; then
+        local mapped
+        if mapped=$(printf '%s' "$text" | python3 "$SPOKEN" "$SYMBOLS"); then
+            text=$mapped
+        else
+            notify "Dictation" "Symbol map failed; typed the words"
+        fi
+    fi
+
+    # The model capitalizes. Typed text does not.
+    # Number names are lowercase, so this runs before the number map.
+    text=${text,,}
+
+    # Number words through one hundred. A compound keeps its hyphen: twenty-one.
+    # A space or comma between digits is removed, so one three five nine types 1359.
+    if [[ -f $NUMBERS && -f $SPOKEN ]]; then
+        local mapped
+        if mapped=$(printf '%s' "$text" | python3 "$SPOKEN" --keep-spaces "$NUMBERS"); then
+            text=$mapped
+        else
+            notify "Dictation" "Number map failed; typed the words"
+        fi
+    fi
+
+    # Brief pause so a notification daemon is less likely to steal focus.
+    sleep 0.05
+    if ! printf '%s' "$text" | wtype -; then
+        notify "Dictation" "wtype failed"
+        return 1
+    fi
+    notify "Dictation" "Done"
+}
+
+mkdir -p "$STATE_DIR"
+
+if is_recording; then
+    stop_and_type
+else
+    # Stale pidfile from a crashed ffmpeg.
+    rm -f "$PIDFILE"
+    start_recording
+fi

@@ -1,0 +1,6 @@
+#!/bin/bash
+for IP in {1..8}; do
+ssh -o ConnectTimeout=1 root@10.10.10.$IP "poweroff" 2>/dev/null &
+done &&
+ssh -o ConnectTimeout=1 root@10.10.10.0 "poweroff" 2>/dev/null
+

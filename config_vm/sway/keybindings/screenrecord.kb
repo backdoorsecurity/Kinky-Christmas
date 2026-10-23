@@ -1,0 +1,6 @@
+#!/bin/bash
+if ps -e | grep wf-recorder; then
+pkill wf-recorder
+else
+wf-recorder -f full-$(date +%Y%m%d-%H%M%S).mp4
+fi

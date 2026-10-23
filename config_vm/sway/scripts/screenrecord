@@ -1,0 +1,5 @@
+#!/bin/bash
+#wf-recorder -f full-$(date +%Y%m%d-%H%M%S).mp4
+#wf-recorder -c h264_vaapi -d /dev/dri/renderD128 -p qp=18 -f recording.mp4
+#wf-recorder -c libx264 -p preset=medium -p crf=18 -r 60 -f "$(date +%Y%m-%d_%H-%M).mp4"
+wf-recorder -c libx264 -p preset=medium -p crf=18 -r 30 -f "$(date +%Y%m-%d_%H-%M).mp4"
