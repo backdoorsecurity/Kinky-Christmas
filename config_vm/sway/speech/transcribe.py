@@ -24,7 +24,7 @@ SAMPLE_RATE = 16000
 SAMPLE_WIDTH = 2
 ASR_MARK = "<asr_text>"
 DEFAULT_MODEL = "frozenlab/qwen3-asr:latest"
-DEFAULT_HOST = "http://127.0.0.1:11434"
+DEFAULT_HOST = "http://10.10.10.1:11434"
 # Accuracy is flat through 60s and drops off near 2 minutes.
 MAX_WINDOW_S = 60.0
 

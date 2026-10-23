@@ -3,7 +3,9 @@
 # A period the model adds is dropped. Period S is the way to type one.
 # Delete a line to stop that form. Add a line to add one.
 
-slash /
+F slash /
+f slash /
+B slash \
 b slash \
 colon :
 semicolon ;
@@ -20,6 +22,10 @@ Hashtag #
 Dollar sign $
 percent sign %
 percent sine %
+And sign &
+and sign &
+And sine &
+and sine &
 Astericks *
 astericks *
 Asterix *

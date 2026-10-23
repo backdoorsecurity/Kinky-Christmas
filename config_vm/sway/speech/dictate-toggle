@@ -8,7 +8,6 @@ WAV="$STATE_DIR/take.wav"
 LOCK="$STATE_DIR/busy.lock"
 TRANSCRIBE="${TRANSCRIBE:-$HOME/.config/sway/speech/transcribe.py}"
 SYMBOLS="${DICTATE_SYMBOLS:-$HOME/.config/sway/speech/dictate-symbols}"
-NUMBERS="${DICTATE_NUMBERS:-$HOME/.config/sway/speech/dictate-numbers}"
 SPOKEN="${SPOKEN_SYMBOLS:-$HOME/.config/sway/speech/spoken-symbols.py}"
 MODEL="${DICTATE_MODEL:-frozenlab/qwen3-asr:latest}"
 
@@ -102,21 +101,6 @@ stop_and_type() {
             text=$mapped
         else
             notify "Dictation" "Symbol map failed; typed the words"
-        fi
-    fi
-
-    # The model capitalizes. Typed text does not.
-    # Number names are lowercase, so this runs before the number map.
-    text=${text,,}
-
-    # Number words through one hundred. A compound keeps its hyphen: twenty-one.
-    # A space or comma between digits is removed, so one three five nine types 1359.
-    if [[ -f $NUMBERS && -f $SPOKEN ]]; then
-        local mapped
-        if mapped=$(printf '%s' "$text" | python3 "$SPOKEN" --keep-spaces "$NUMBERS"); then
-            text=$mapped
-        else
-            notify "Dictation" "Number map failed; typed the words"
         fi
     fi
 

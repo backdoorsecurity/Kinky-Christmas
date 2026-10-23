@@ -6,9 +6,6 @@ map is a spoken name, then the symbol. Names are whole words and match the capit
 name does not win inside a longer one. A period glued to a matched name
 is removed with it. Spaces next to an inserted symbol are removed, so the
 symbol sits against the words around it.
-
-Pass --keep-spaces to replace names and leave the characters around them.
-On that path, a space or comma between digits is removed.
 """
 
 from __future__ import annotations
@@ -36,15 +33,11 @@ def load_map(path: Path) -> list[tuple[str, str]]:
     return pairs
 
 
-def apply_symbols(text: str, pairs: list[tuple[str, str]], *, keep_spaces: bool = False) -> str:
+def apply_symbols(text: str, pairs: list[tuple[str, str]]) -> str:
     if not text or not pairs:
         return text
     by_name = {name: symbol for name, symbol in pairs}
     pattern = "|".join(re.escape(name) for name, _symbol in pairs)
-    if keep_spaces:
-        found = re.compile(rf"\b({pattern})\b")
-        replaced = found.sub(lambda match: by_name[match.group(1)], text)
-        return join_digits(replaced)
     # The name is matched as written. A period glued to that name is part of it.
     found = re.compile(rf"\b({pattern})\b\.?")
 
@@ -57,11 +50,6 @@ def apply_symbols(text: str, pairs: list[tuple[str, str]], *, keep_spaces: bool 
     marked = re.sub(rf"[ \t]*{LEFT}", LEFT, marked)
     marked = re.sub(rf"{RIGHT}[ \t]*", RIGHT, marked)
     return marked.replace(LEFT, "").replace(RIGHT, "")
-
-
-def join_digits(text: str) -> str:
-    """Drop a space or comma that sits between digits."""
-    return re.sub(r"(?<=\d)[,\s]+(?=\d)", "", text)
 
 
 def drop_periods(marked: str) -> str:
@@ -83,16 +71,11 @@ def drop_periods(marked: str) -> str:
 
 
 def main() -> None:
-    args = sys.argv[1:]
-    keep_spaces = False
-    if "--keep-spaces" in args:
-        keep_spaces = True
-        args.remove("--keep-spaces")
-    if len(args) != 1:
-        print("usage: spoken-symbols.py [--keep-spaces] MAP", file=sys.stderr)
+    if len(sys.argv) != 2:
+        print("usage: spoken-symbols.py MAP", file=sys.stderr)
         raise SystemExit(2)
-    pairs = load_map(Path(args[0]))
-    sys.stdout.write(apply_symbols(sys.stdin.read(), pairs, keep_spaces=keep_spaces))
+    pairs = load_map(Path(sys.argv[1]))
+    sys.stdout.write(apply_symbols(sys.stdin.read(), pairs))
 
 
 if __name__ == "__main__":
